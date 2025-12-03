@@ -1,3 +1,4 @@
+package com.example.vibestage.data.remote
 
 import com.example.vibestage.data.model.*
 import retrofit2.Response
@@ -34,4 +35,3 @@ interface ApiService {
     @DELETE("applications/{id}")
     suspend fun deleteApplication(@Path("id") id: Int): Response<Map<String, String>>
 }
-
