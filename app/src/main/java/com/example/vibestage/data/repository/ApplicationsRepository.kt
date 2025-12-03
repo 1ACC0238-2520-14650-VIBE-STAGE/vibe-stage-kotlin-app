@@ -2,7 +2,6 @@ package com.example.vibestage.data.repository
 
 import com.example.vibestage.data.local.TokenManager
 import com.example.vibestage.data.model.Application
-import com.example.vibestage.data.model.ApplicationResponse
 import com.example.vibestage.data.model.CreateApplicationRequest
 import com.example.vibestage.data.remote.ApiService
 import com.example.vibestage.data.remote.RetrofitClient
@@ -17,7 +16,7 @@ class ApplicationsRepository(private val tokenManager: TokenManager) {
         RetrofitClient.getClient(tokenManager).create(ApiService::class.java)
     }
 
-    fun createApplication(eventId: Int, message: String): Flow<Resource<ApplicationResponse>> = flow {
+    fun createApplication(eventId: Int, message: String): Flow<Resource<Application>> = flow {
         try {
             emit(Resource.Loading())
 
@@ -57,7 +56,7 @@ class ApplicationsRepository(private val tokenManager: TokenManager) {
             val response = apiService.deleteApplication(id)
 
             if (response.isSuccessful) {
-                val message = response.body()?.get("message") ?: "Postulación eliminada"
+                val message = response.body()?.message ?: "Postulación eliminada"
                 emit(Resource.Success(message))
             } else {
                 emit(Resource.Error(response.message() ?: "Error al eliminar postulación"))
@@ -67,4 +66,3 @@ class ApplicationsRepository(private val tokenManager: TokenManager) {
         }
     }.flowOn(Dispatchers.IO)
 }
-
