@@ -2,7 +2,6 @@ package com.example.vibestage.data.repository
 
 import com.example.vibestage.data.local.TokenManager
 import com.example.vibestage.data.model.Show
-import com.example.vibestage.data.model.ShowsResponse
 import com.example.vibestage.data.remote.ApiService
 import com.example.vibestage.data.remote.RetrofitClient
 import kotlinx.coroutines.Dispatchers
@@ -19,13 +18,15 @@ class ShowsRepository(private val tokenManager: TokenManager) {
     fun getShows(
         genre: String? = null,
         location: String? = null,
-        page: Int? = 1,
-        limit: Int? = 20
-    ): Flow<Resource<ShowsResponse>> = flow {
+        dateFrom: String? = null,
+        dateTo: String? = null,
+        page: Int? = null,
+        limit: Int? = null
+    ): Flow<Resource<List<Show>>> = flow {
         try {
             emit(Resource.Loading())
 
-            val response = apiService.getShows(genre, location, page, limit)
+            val response = apiService.getShows(genre, location, dateFrom, dateTo, page, limit)
 
             if (response.isSuccessful && response.body() != null) {
                 emit(Resource.Success(response.body()!!))
@@ -53,4 +54,3 @@ class ShowsRepository(private val tokenManager: TokenManager) {
         }
     }.flowOn(Dispatchers.IO)
 }
-
