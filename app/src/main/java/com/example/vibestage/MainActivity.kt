@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.vibestage.di.AppContainer
 import com.example.vibestage.presentation.navigation.VibeStageNavigation
 import com.example.vibestage.ui.theme.VibeStageTheme
 
@@ -18,6 +19,10 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
 
         super.onCreate(savedInstanceState)
+
+        // Inicializar el contenedor de dependencias
+        AppContainer.initialize(this)
+
         enableEdgeToEdge()
 
         setContent {
