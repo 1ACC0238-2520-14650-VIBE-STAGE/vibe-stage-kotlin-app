@@ -9,9 +9,9 @@ data class User(
     @Json(name = "name") val name: String,
     @Json(name = "email") val email: String,
     @Json(name = "role") val role: String,
-    @Json(name = "bio") val bio: String?,
-    @Json(name = "phone") val phone: String?,
-    @Json(name = "isActive") val isActive: Boolean
+    @Json(name = "bio") val bio: String? = null,
+    @Json(name = "phone") val phone: String? = null,
+    @Json(name = "isActive") val isActive: Boolean? = true
 )
 
 @JsonClass(generateAdapter = true)
@@ -34,4 +34,3 @@ data class AuthResponse(
     @Json(name = "token") val token: String?,
     @Json(name = "user") val user: User
 )
-
